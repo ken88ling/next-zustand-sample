@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { format } from "date-fns";
 
 export default function Component2() {
-  const { selectedDate, fetchData, data } = useStore();
+  const { selectedDate, fetchData, isLoading, data } = useStore();
 
   useEffect(() => {
     fetchData(selectedDate).then();
@@ -16,18 +16,14 @@ export default function Component2() {
     <div>
       <h2>Component 2</h2>
       <p>Selected date: {format(selectedDate, "dd-MM-yyyy")}</p>
-
-      {data ? (
-        <ul>
-          {data?.items?.map((item) => (
-            <li key={item.id}>
-              Order Date : {item.dateAdded} - {item.name}{" "}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>Loading...</p>
-      )}
+      {isLoading && <p>Loading...</p>}
+      <ul>
+        {data?.items?.map((item) => (
+          <li key={item.id}>
+            Order Date : {item.dateAdded} - {item.name}{" "}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
